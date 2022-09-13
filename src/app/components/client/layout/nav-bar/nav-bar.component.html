@@ -1,0 +1,32 @@
+<nav class="header" id="header" #headerpd>
+    <div
+      class="header_toggle"
+      (click)="Toggle('header-toggle', 'nav-bar', 'body-pd', 'header')"
+    >
+      <i class="bx bx-menu" id="header-toggle" #toggle></i>
+    </div>
+    <div class="container">
+      <xng-breadcrumb separator=">">
+        <ng-container *xngBreadcrumbItem="let breadcrumb">
+          <ng-container>{{ breadcrumb | titlecase }}</ng-container>
+        </ng-container>
+      </xng-breadcrumb>
+    </div>
+    <div class="container text-right">
+      <button class="dropbtn btn-style">
+        <i class="fa fa-bell fa-lg"></i>
+        <span class="badge">1</span>
+      </button>
+      <div class="dropdown">
+        <button class="dropbtn">Bonjour {{ currentUserDisplayName}}</button>
+        <div class="dropdown-content" style="cursor: pointer;">
+          <a>Settings </a>
+          <a>Changer mot de passe</a>
+        </div>
+      </div>
+    </div>
+    <div class="header_img" style="width:4.8rem">
+      <img src="https://i.imgur.com/hczKIze.jpg" alt="avatar-image" />
+    </div>
+  </nav>
+  <app-header [currentRole]="currentRole"></app-header>

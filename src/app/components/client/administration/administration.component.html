@@ -1,0 +1,492 @@
+<div class="card mt-4">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button type="button" class="btn-add mr-2" (click)="openNew()">
+        <i class="fa fa-user-plus"></i> Ajouter utilisateur
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteSelectedItems()"
+      >
+        <!-- [disabled]="!selectedItems || !selectedItems.length" -->
+        Delete
+      </button>
+    </ng-template>
+  </p-toolbar>
+  <div class="progress-spinner text-center" *ngIf="getMyJobLoader">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <p-table
+    *ngIf="!getMyJobLoader"
+    #dt
+    [value]="items"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [globalFilterFields]="['jobTitle', 'positionType', 'departement']"
+    [(selection)]="selectedItems"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" placeholder="Chercher..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="firstname">
+          Prénom
+          <p-columnFilter
+            type="text"
+            field="firstname"
+            display="menu"
+          ></p-columnFilter>
+          <p-sortIcon field="firstname"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastname">
+          Nom
+          <p-columnFilter
+            type="text"
+            field="lastname"
+            display="menu"
+          ></p-columnFilter
+          ><p-sortIcon field="lastname"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">
+          Email
+          <p-columnFilter
+            type="text"
+            field="email"
+            display="menu"
+          ></p-columnFilter>
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="phonenumber">
+          Numéro de téléphone
+          <p-columnFilter
+            type="text"
+            field="phonenumber"
+            display="menu"
+          ></p-columnFilter>
+          <p-sortIcon field="phonenumber"></p-sortIcon>
+        </th>
+        <th pSortableColumn="access">
+          Accés
+          <p-columnFilter
+            type="text"
+            field="access"
+            display="menu"
+          ></p-columnFilter
+          ><p-sortIcon field="access"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="item"></p-tableCheckbox>
+        </td>
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.email }}</td>
+        <td>
+          {{ item.phoneNumber ? "+" + item.phoneNumber : "Non disponnible" }}
+        </td>
+        <td>
+          <p-splitButton
+            *ngIf="item.lastName !== 'Admin'"
+            label="Gérer les accès"
+            (onClick)="selectAffectRole(item)"
+            (click)="updateSelectedUser(item)"
+            [model]="item.role"
+            styleClass="p-button-rounded mr-2 ui-splitbutton.custom-background-style"
+          ></p-splitButton>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-icon"
+            title="Edit"
+            (click)="selectEdit(item)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon"
+            title="Edit"
+            (click)="selectDelete(item)"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        total {{ items ? items.length : 0 }} utilisateurs.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  [(visible)]="itemAddDialog"
+  [style]="{ width: '700px', height: '550px' }"
+  header="Ajouter utilisateur"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="itemsFormGroup">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Prénom</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Prénom"
+            formControlName="firstname"
+            [ngClass]="{
+              'is-invalid': checkFormValidationFirstname(),
+              'is-valid': itemsFormGroup.get('firstname')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationFirstname()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Prénom obligatoire
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Nom</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nom"
+            formControlName="lastname"
+            [ngClass]="{
+              'is-invalid': checkFormValidationLastName(),
+              'is-valid': itemsFormGroup.get('lastname')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationLastName()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Nom obligatoire
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Roles</label>
+          <p-multiSelect
+            [options]="roles"
+            formControlName="roles"
+            optionLabel="code"
+          ></p-multiSelect>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid': checkFormValidationEmail(),
+              'is-valid': itemsFormGroup.get('email')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationEmail()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Email required
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Numéro de téléphone</label>
+          <ngx-intl-tel-input
+            class="form-control form-phonenumber"
+            [cssClass]="'form-control form-phonenumber'"
+            [preferredCountries]="preferredCountries"
+            [enableAutoCountrySelect]="true"
+            [enablePlaceholder]="true"
+            [searchCountryFlag]="true"
+            [searchCountryField]="[
+              SearchCountryField.Iso2,
+              SearchCountryField.Name
+            ]"
+            [selectFirstCountry]="false"
+            [selectedCountryISO]="CountryISO.Tunisia"
+            [maxLength]="15"
+            [phoneValidation]="true"
+            [separateDialCode]="separateDialCode"
+            [numberFormat]="PhoneNumberFormat.National"
+            name="phonenumber"
+            formControlName="phonenumber"
+          >
+          </ngx-intl-tel-input>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Password</label>
+          <p-password
+            [feedback]="false"
+            formControlName="password"
+            [toggleMask]="true"
+            styleClass="p-input-icon-right"
+            placeholder="Password"
+            [disabled]="true"
+          ></p-password>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Annuler"
+      class="p-button-cancel"
+      (click)="itemUpdateDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Confirmer"
+      class="p-button-save"
+      (click)="saveUser()"
+      [disabled]="itemsFormGroup.invalid"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Update Dialog -->
+
+<p-dialog
+  header="Modifier utilisateur"
+  [(visible)]="itemUpdateDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="updateItemsFormGroup">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Prénom</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Prénom"
+            formControlName="firstname"
+            [ngClass]="{
+              'is-invalid': checkFormValidationFirstname(),
+              'is-valid': updateItemsFormGroup.get('firstname')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationFirstname()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Prénom obligatoire
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Nom</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nom"
+            formControlName="lastname"
+            [ngClass]="{
+              'is-invalid': checkFormValidationLastName(),
+              'is-valid': updateItemsFormGroup.get('lastname')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationLastName()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Nom obligatoire
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid': checkFormValidationEmail(),
+              'is-valid': updateItemsFormGroup.get('email')?.valid
+            }"
+          />
+          <div
+            *ngIf="checkFormValidationEmail()"
+            class="invalid-feedback invalid-feedback-position"
+          >
+            Email required
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="label mb-2">Numéro de téléphone</label>
+          <ngx-intl-tel-input
+            class="form-control form-phonenumber"
+            [cssClass]="'form-control form-phonenumber'"
+            [preferredCountries]="preferredCountries"
+            [enableAutoCountrySelect]="true"
+            [enablePlaceholder]="true"
+            [searchCountryFlag]="true"
+            [searchCountryField]="[
+              SearchCountryField.Iso2,
+              SearchCountryField.Name
+            ]"
+            [selectFirstCountry]="false"
+            [selectedCountryISO]="CountryISO.Tunisia"
+            [maxLength]="15"
+            [phoneValidation]="true"
+            [separateDialCode]="separateDialCode"
+            [numberFormat]="PhoneNumberFormat.National"
+            name="phonenumber"
+            formControlName="phonenumber"
+          >
+          </ngx-intl-tel-input>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Annuler"
+      class="p-button-cancel"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Confirmer"
+      class="p-button-save"
+      (click)="editItem()"
+      [disabled]="updateItemsFormGroup.invalid"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Supprimer"
+  [(visible)]="itemDeleteDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes vous sûr de vouloir supprimer cette utilisateur ? cette action sera
+    irreversible.
+  </p>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Annuler"
+      class="p-button-cancel"
+      (click)="itemDeleteDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Confirmer"
+      class="p-button-save"
+      (click)="deleteItem()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Affecter rôle"
+  [(visible)]="itemAffectRoleDialog"
+  [modal]="true"
+  [style]="{ width: '50vw', height: '20vw' }"
+  [draggable]="true"
+  [resizable]="false"
+>
+  <ng-template pTemplate="content">
+    <div class="row">
+      <div class="col-md-12 mb-4">
+        <p-listbox
+          [options]="roles"
+          [(ngModel)]="selectedRole"
+          optionLabel="code"
+          [style]="{ width: '30rem' }"
+        ></p-listbox>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Annuler"
+      class="p-button-cancel"
+      (click)="itemAffectRoleDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Confirmer"
+      class="p-button-save"
+      (click)="affectRole()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Dialog unassign role start -->
+<p-dialog
+  header="Désaffecter l'accès"
+  [(visible)]="displayUnassign"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="true"
+  [resizable]="true"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? Cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Annuler"
+      class="p-button-cancel"
+      (click)="displayUnassign = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Confirmer"
+      class="p-button-save"
+      (click)="unassignRoleUser()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Dialog unassign role end -->

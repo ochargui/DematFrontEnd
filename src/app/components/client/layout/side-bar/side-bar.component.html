@@ -1,0 +1,83 @@
+<div class="body-navbar" id="body-pd" #bodypd>
+  <app-nav-bar
+    [currentRole]="currentRole"
+    [currentUserDisplayName]="currentUserDisplayName"
+  ></app-nav-bar>
+  <div class="l-navbar" id="nav-bar" #nav>
+    <nav class="nav">
+      <div class="sidebar_container">
+        <a routerLink="/client/home" class="nav_logo">
+          <div class="logo_container">
+            <img
+              src="assets/images/auth/logo.png"
+              class="logo_nav"
+              alt="logo-demat"
+            />
+          </div>
+          <span class="nav_logo-name">DEMAT</span>
+        </a>
+        <div class="nav_list">
+          <a
+            routerLink="/client/home"
+            class="nav_link active"
+            *ngIf="checkIfTheItemExistsInTheArray('Super-utilisateur') !== -1"
+          >
+            <i class="bx bx-home nav_icon"></i>
+            <span class="nav_name">Accueil</span>
+          </a>
+          <a
+            routerLink="/client/search"
+            class="nav_link"
+            *ngIf="checkIfTheItemExistsInTheArray('Super-utilisateur') !== -1"
+          >
+            <i class="bx bx-search nav_icon"></i>
+            <span class="nav_name">Recherche</span>
+          </a>
+          <a
+            routerLink="/client/administration"
+            class="nav_link"
+            *ngIf="checkIfTheItemExistsInTheArray('Super-utilisateur') !== -1"
+          >
+            <i class="bx bx-user nav_icon"></i>
+            <span class="nav_name">Administration</span>
+          </a>
+          <a
+            routerLink="/client/operator/typing"
+            class="nav_link"
+            *ngIf="checkIfTheItemExistsInTheArray('Agent-typage') !== -1"
+          >
+            <i class="bx bx-spreadsheet nav_icon"></i>
+            <span class="nav_name">Typage</span>
+          </a>
+          <a
+            routerLink="/client/operator/control"
+            class="nav_link"
+            *ngIf="checkIfTheItemExistsInTheArray('Controleur-un-type') !== -1"
+          >
+            <i class="bx bx-laptop nav_icon"></i>
+            <span class="nav_name">Contrôle</span>
+          </a>
+          <a
+            routerLink="/client/operator/digitalizing"
+            class="nav_link"
+            *ngIf="checkIfTheItemExistsInTheArray('Agent-numerisation') !== -1"
+          >
+            <i class="bx bx-scan nav_icon"></i>
+            <span class="nav_name">Scannage</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav_link" (click)="logout()" style="cursor: pointer">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">Déconnexion</span>
+      </a>
+    </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100 bg-light">
+    <div class="container" style="margin-top: 1.5rem">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!--Container Main end-->
+</div>

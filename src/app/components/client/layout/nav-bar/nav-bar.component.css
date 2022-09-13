@@ -1,0 +1,134 @@
+.fa-bell {
+    color: #1931cf;
+  }
+  .dropbtn {
+    background-color: #1931cf;
+    color: white;
+    padding: 13px;
+    font-size: 10px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    width: 150px;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+  }
+  .btn-style {
+    cursor: pointer;
+    width: 40px;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    background-color: #e8ebf2;
+  }
+  .dropbtn .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    border-radius: 50%;
+    background: linear-gradient(#0d1a6b, #1a33d5);
+    color: white;
+    transform: translateX(-4px);
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 82px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    font-size: 10px;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: white;
+    background-color: #1931cf;
+    padding: 3px 3px;
+    text-decoration: none;
+    display: block;
+    width: 150px;
+  }
+  .dropdown-content a:hover {
+    background-color: #ddd;
+    color: #1931cf;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+    text-align: center;
+  }
+  .dropdown:hover .dropbtn {
+    background-color: #1931cf;
+  }
+  
+  ::ng-deep .breadcrumb {
+    color: #093a48;
+    margin: 17px;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  .calendar_input{
+    padding: 13px;
+    color: #093a48;
+    border: none;
+    font-size: 10px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    width: 150px;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 13px;
+    color: #093a48;
+    border: none;
+    font-size: 10px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    width: 150px;
+    height: 45px;
+    margin-right: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .button:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e8ebf2;
+    z-index: -2;
+  }
+  .button:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #1931cf;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  .button:hover {
+    color: #fff;
+  }
+  .button:hover:before {
+    width: 100%;
+  }
+  

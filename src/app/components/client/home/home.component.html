@@ -1,0 +1,49 @@
+<!-- Start Status title -->
+<div class="status-title">
+    <p>DEMAT- le portail de Consulting du documents</p>
+  </div>
+  <!-- End Status title -->
+  
+  <!-- Start Status area -->
+  <div class="demat-status-area">
+    <app-document-traffic
+      [input1]="input1"
+      [input2]="input2"
+      [input3]="input3"
+      [input4]="input4"
+    ></app-document-traffic>
+  </div>
+  <!-- End Status area-->
+  
+  <!-- Start Documents Statistic area-->
+  <div class="documents-statistic-area">
+   <app-document-validity-chart [stats]="stats"></app-document-validity-chart>
+  </div>
+  <!-- End Documents Statistic area-->
+  
+<!-- Start Classement Statistic area-->
+<div class="classement-statistic-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+          <div class="valid-statis-inner mg-tb-30">
+            <app-document-valid-chart></app-document-valid-chart>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+          <div class="valid-statis-inner mg-tb-30">
+          <app-document-novalid-chart></app-document-novalid-chart>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+          <div class="statistic-right-area mg-tb-30 sm-res-mg-t-0">
+           <app-agent-charts></app-agent-charts>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Classement Statistic area-->
+  
+  

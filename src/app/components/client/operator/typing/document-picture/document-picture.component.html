@@ -1,0 +1,13 @@
+<div *ngIf="rawDocuments.length === 0 || rawDocuments.length === currentIndex">
+  Il n'y a pas de document pour le moment
+</div>
+
+<div class="image-position" *ngIf="rawDocuments.length !== 0">
+  <p-image
+    src="{{ currentDocument?.documentPicture?.url }}"
+    alt="Image"
+    width="1000"
+    height="500"
+    [preview]="true"
+  ></p-image>
+</div>

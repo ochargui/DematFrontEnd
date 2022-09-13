@@ -1,0 +1,61 @@
+<div class="container mt-4" *ngIf="loading">
+  <app-document-skeleton></app-document-skeleton>
+</div>
+
+<div class="container mt-4" style="margin-top: 100px" *ngIf="!loading">
+  <app-document-picture
+    [currentDocument]="currentDocument"
+    [rawDocuments]="rawDocuments"
+    [currentIndex]="currentIndex"
+  ></app-document-picture>
+</div>
+
+<div class="container mt-4">
+  <div class="d-flex flex-row" style="margin-left: 10%">
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('Check')">Chéque</button>
+    </div>
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('Withdrawal')">
+        Retrait
+      </button>
+    </div>
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('CashPayment')">
+        Versement Espèce
+      </button>
+    </div>
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('CheckRemittanceSlip')">
+        Bordereau remise de chéque
+      </button>
+    </div>
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('PaymentOrder')">
+        Ordre de virement
+      </button>
+    </div>
+    <div class="p-2">
+      <button class="button" (click)="showModalDialog('Various')">
+        Divers
+      </button>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Voulez-vous confirmer le typage ?"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="button" (click)="confirm()">Je confirme</button>
+  </ng-template>
+</p-dialog>

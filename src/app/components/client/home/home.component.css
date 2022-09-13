@@ -1,0 +1,146 @@
+/*----------------------------------------*/
+/*   Status CSS
+/*----------------------------------------*/
+.wb-traffic-inner {
+    padding: 5px;
+    background: #fff;
+    margin-top: 5px;
+    margin-left: -20px;
+    text-align: center;
+  }
+  .website-traffic-ctn h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+  }
+  .website-traffic-ctn p {
+    font-size: 14px;
+    color: #333;
+    margin-top: 0;
+  }
+  .counter1 {
+    color: #000000;
+  }
+  .counter2 {
+    color: #1931cf;
+  }
+  .counter3 {
+    color: #1abb9d;
+  }
+  .counter4 {
+    color: #e74c3c;
+  }
+  .cube-stats1,
+  .cube-stats2,
+  .cube-stats3,
+  .cube-stats4 {
+    float: left;
+    margin-top: -79px;
+    margin-left: 18px;
+    width: 45px;
+    height: 45px;
+    background: #1931cf;
+    position: relative;
+    border-radius: 5px;
+  }
+  .status-title {
+    font-size: 15px;
+    color: #093a48;
+    text-align: left;
+    font-weight: bold;
+    color: #093a48;
+    padding-top: 10px;
+  }
+  /*----------------------------------------*/
+/*   Status CSS
+/*----------------------------------------*/
+.wb-traffic-inner {
+    padding: 5px;
+    background: #fff;
+    margin-top: 5px;
+    margin-left: -20px;
+    text-align: center;
+  }
+  .website-traffic-ctn h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+  }
+  .website-traffic-ctn p {
+    font-size: 14px;
+    color: #333;
+    margin-top: 0;
+  }
+  .counter1 {
+    color: #000000;
+  }
+  .counter2 {
+    color: #1931cf;
+  }
+  .counter3 {
+    color: #1abb9d;
+  }
+  .counter4 {
+    color: #e74c3c;
+  }
+  .cube-stats1,
+  .cube-stats2,
+  .cube-stats3,
+  .cube-stats4 {
+    float: left;
+    margin-top: -79px;
+    margin-left: 18px;
+    width: 45px;
+    height: 45px;
+    background: #1931cf;
+    position: relative;
+    border-radius: 5px;
+  }
+  .status-title {
+    font-size: 15px;
+    color: #093a48;
+    text-align: left;
+    font-weight: bold;
+    color: #093a48;
+    padding-top: 10px;
+  }
+  /*----------------------------------------*/
+  /*    Validate documents statistics CSS
+  /*----------------------------------------*/
+  .documents-statistic-inner,.valid-statis-inner, .nvalid-statis-inner {
+    padding: 20px;
+    background: #fff;
+    margin-top: 12px;
+    margin-left: -19px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .title-inner-pro {
+    display: flex;
+  }
+  .title-stat h2 {
+    font-size: 15px;
+    color: #093a48;
+    text-align: left;
+    font-weight: bold;
+    color: #093a48;
+    margin-top: 29px;
+  }
+  .statistic-right-area{
+    padding: 20px;
+    background: #fff;
+    margin-top: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .flot-chart p{
+    text-align: end;
+  }
+  /*----------------------------------------*/
+  /*    Classement  statistics CSS
+  /*----------------------------------------*/
+  
+  
+  
+  
+  

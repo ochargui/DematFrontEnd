@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="vertical-center">
+    <div class="text-center">
+      <div class="p-fluid grid mb-4">
+        <!-- <div class="col-12" style="width: 400px; margin-left: 26rem">
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Email"
+              class="p-inputtext-lg"
+              pInputText
+            />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Email"
+              class="p-inputtext-lg"
+              pInputText
+            />
+          </div>
+        </div> -->
+      </div>
+      <input
+        type="file"
+        (change)="onChange($event)"
+        multiple
+        name="imageUpload"
+        id="imageUpload"
+        style="display: none"
+      />
+      <!-- accept="application/pdf" -->
+      <label for="imageUpload" class="button">
+        <div class="mt-2">Importer</div>
+      </label>
+      <div class="mt-2" *ngIf="loading">
+        <img width="200px" height="200px" src="assets/images/Loader.gif" />
+      </div>
+      <div class="container mt-4" *ngIf="files.length > 0">
+        <div class="mb-2">( {{ justUploadedFile }} / {{ totalFiles }} )</div>
+        <p-progressBar [value]="value" [showValue]="false"></p-progressBar>
+      </div>
+    </div>
+
+    <div class="container mt-4 container-table table-scroll">
+      <p-table
+        *ngIf="files.length > 0"
+        [value]="files"
+        [resizableColumns]="true"
+        styleClass="p-datatable-gridlines"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="400px"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Nom</th>
+            <th pResizableColumn>Type</th>
+            <th pResizableColumn>Taille</th>
+            <th pResizableColumn>Etat</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-file>
+          <tr>
+            <td>{{ file.name }}</td>
+            <td>
+              {{ file.type }}
+            </td>
+            <td>{{ file.size / 1000 | number: "1.0-1" }} KO</td>
+            <td>
+              <i
+                class="pi"
+                [ngClass]="
+                  file.state === 'invalid'
+                    ? 'pi-times-circle wrong'
+                    : 'pi-check-circle valid'
+                "
+              ></i>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

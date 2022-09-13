@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Kaushan+Script&family=Poppins:ital,wght@0,500;1,100;1,800&display=swap");
+
+.left_side,
+.right_side {
+  height: 50vh;
+  width: 100%;
+}
+
+.left_side {
+  background-image: url("../../../assets/images/auth/back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+}
+
+
+
+@media screen and (min-width: 768px) {
+  .left_side,
+  .right_side {
+    height: 100vh;
+  }
+}
+
+.clip-path-shadow {
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+.first_title {
+  font-size: 2rem;
+  text-align: center;
+  font: normal normal normal 40px/90px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.second_title {
+  text-align: center;
+  font: normal normal bold 120px/115px Poppins;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.third_title {
+  text-align: center;
+  font: normal normal normal Poppins;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.title_container {
+  transform: translate(0, 90%);
+}
+
+.logo_login {
+  top: 165px;
+  left: 1422px;
+  width: 160px;
+  height: 157px;
+  /* UI Properties */
+  opacity: 1;
+}
+
+.form_container{
+  padding-top: 15%
+}

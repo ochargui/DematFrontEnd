@@ -1,0 +1,25 @@
+<div class="past-day-statis">
+  <div class="title-inner-pro">
+    <div class="title-stat">
+      <h2>Right Area 2</h2>
+    </div>
+    <div class="dash-widget-visits">
+      <p-dropdown
+        [options]="users"
+        [(ngModel)]="selectedOperator"
+        [editable]="true"
+        optionLabel="displayName"
+        (onChange)="onSelectOperator(selectedOperator)"
+      ></p-dropdown>
+    </div>
+  </div>
+  <div>
+    <apx-chart
+      [series]="series"
+      [chart]="chart"
+      [labels]="labels"
+      [responsive]="responsive"
+      [fill]="fill"
+    ></apx-chart>
+  </div>
+</div>

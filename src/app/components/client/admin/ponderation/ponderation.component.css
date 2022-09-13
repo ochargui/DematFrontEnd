@@ -1,0 +1,49 @@
+.fa-edit {
+    color: blue;
+  }
+  .fa-trash {
+    color: red;
+  }
+  .button {
+    background: #1a33d5;
+    color: #fff;
+    text-decoration: none;
+    width: 128px;
+    height: 38px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .btn-add {
+    background: linear-gradient(#0d1a6b, #1a33d5);
+    color: #fff;
+    text-decoration: none;
+    width: 200px;
+    height: 38px;
+    border: none;
+    cursor: pointer;
+  }
+  .label {
+    color: #1931cf;
+  }
+  .p-button-save {
+    background: linear-gradient(#0d1a6b, #1a33d5);
+    color: #fff;
+    text-decoration: none;
+    height: 42px;
+    border: none;
+    cursor: pointer;
+  }
+  .p-button-cancel {
+    background: #fff;
+    color: #1931cf;
+    text-decoration: none;
+    height: 42px;
+    border-color: #1931cf;
+    cursor: pointer;
+  }
+  
+  .form-phonenumber {
+    width: 314px;
+  }
+  

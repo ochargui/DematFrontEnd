@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
+        <div class="documents-statistic-inner mg-tb-30">
+          <div class="title-inner-pro">
+            <div class="title-stat">
+              <h2>Graphe validité des documents</h2>
+            </div>
+          </div>
+          <div class="flot-chart flot-chart-sts">
+            <apx-chart
+              [series]="series"
+              [chart]="chart"
+              [dataLabels]="dataLabels"
+              [plotOptions]="plotOptions"
+              [yaxis]="yaxis"
+              [legend]="legend"
+              [fill]="fill"
+              [stroke]="stroke"
+              [tooltip]="tooltip"
+              [xaxis]="xaxis"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+        <div class="statistic-right-area mg-tb-30 sm-res-mg-t-0">
+          <div class="past-day-statis">
+            <div class="title-inner-pro">
+              <div class="title-stat">
+                <h2>Nombre de document total</h2>
+              </div>
+            </div>
+            <!-- <p-cascadeSelect [options]="zones" optionLabel="name"  [optionGroupChildren]="['states', 'cities']" [style]="{'minWidth': '14rem'}"></p-cascadeSelect> -->
+            <div style="text-align:center;">
+            <h2><span class="zone-number">{{ observableValidInvalid | async }}</span></h2>
+                <p class="text-total"> document total</p>
+            </div>
+            <div style="text-align:center;">
+                <h2><span class="counter2" >{{ observableValid | async }}</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="counter4">{{ observableInvalid | async }}</span></h2>
+                <span class="counter2"> Valide</span>&nbsp; &nbsp; &nbsp; &nbsp;    <span class="counter4"> Non Valide</span>
+            </div>
+          </div>
+
+          <div class="dash-widget-visits"></div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,24 @@
+<div class="container">
+    <button class="button squared-button text-style " (click)="showModalDialog('Check')">Chéque</button>
+    <button  class="button squared-button text-style" (click)="showModalDialog('CashPayment')">Versement espéce</button>
+    <button  class="button squared-button text-style "  (click)="showModalDialog('PaymentOrder')">Ordre de virement</button>
+    <button  class="button squared-button text-style" (click)="showModalDialog('Withdrawal')">Retrait</button>
+    <button  class="button squared-button text-style " (click)="showModalDialog('CheckRemittanceSlip')">Bordereau remise de chéque</button> 
+</div>
+
+<p-dialog
+  header="Voulez-vous confirmer le contrôle  {{chosenTypeTranslated}} ?" 
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? 
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="btn-submit" (click)="confirm()" >Je confirme</button>
+  </ng-template>
+
+ 

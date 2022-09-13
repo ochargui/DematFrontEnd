@@ -1,0 +1,41 @@
+.button {
+    display: inline-block;
+    padding: 13px;
+    color: #093a48;
+    border: none;
+    font-size: 10px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    width: 150px;
+    height: 45px;
+    margin-right: 0.5rem;
+  }
+  .button-disabled{
+    cursor: not-allowed;
+    opacity: 50%;
+  }
+
+  .btn-valider{
+    background-color: #00C247;
+    color: #FFFFFF;
+  }
+  .btn-retyper{
+    background-color: #607D8A;
+    color: #FFFFFF;
+  }
+  .btn-rejeter{
+    background-color: #FF3333;
+    color: #FFFFFF;
+  }
+  .btn-passer{
+    background-color: #424242;
+    color: #FFFFFF;
+  }
+.ctn-buttons{
+    top:35rem;
+    position:fixed;
+    overflow-x:hidden;
+}

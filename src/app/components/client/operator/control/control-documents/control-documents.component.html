@@ -1,0 +1,756 @@
+<div class="container">
+  <form #Form="ngForm">
+  <div class="row">
+    <div class="col-md-8 mt-4">
+      <div class="grid formgrid">
+        <div class="field col-12 md:col-6 md:pr-6 pr-0" *ngIf="loading">
+          <app-control-document-skeleton></app-control-document-skeleton>
+        </div>
+        <div class="field col-12 md:col-6 md:pr-6 pr-0" *ngIf="!loading">
+          <app-control-document-picture
+            [rawDocuments]="rawDocuments"
+            [currentDocument]="currentDocument"
+            [currentIndex]="currentIndex"
+          ></app-control-document-picture>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div style="margin-left: 5%" class="mt-4" *ngIf="documentType === 'Check'">
+        <span class="mb-4">Critères de contrôle de chéque</span>
+        <p-accordion>
+          <p-accordionTab header="Champ">
+            <p-inputNumber
+              placeholder="Numéro de chéque"
+              mode="decimal"
+              #champ="ngModel" ngModel
+              name="champ"
+              [(ngModel)]="fieldNumber"
+            ></p-inputNumber>
+            <div *ngIf="champ?.invalid && (champ?.dirty || champ?.touched)" class="alert alert-danger">
+
+              <strong *ngIf="champ.errors?.required">Veuillez saisir un nom </strong>
+              
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Signature client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature du client sur support"
+                label="Présence Signature du client sur support"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature Verso support +N°CIN"
+                label="Présence Signature Verso support +N°CIN"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Document Physique">
+            <div>
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique de l'opération"
+                label="Présence Support physique de l'opération"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Données Client">
+            <div>
+              <p-checkbox
+                name="Données Client"
+                value="Identité bénéficiaire  indiqué"
+                label="Identité bénéficiaire  indiqué"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Trace Machine"
+                value="Présence Oblitération machine"
+                label="Présence Oblitération machine"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Trace Machine"
+                value="Oblitération confrorme"
+                label=" Oblitération confrorme"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Confromité Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Compte valide"
+                label="Compte valide"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Montant valide"
+                label="Montant valide"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Numéro de caisse valide"
+                label="Numéro de caisse valide"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Cachet Banque">
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet payé"
+                label="Présence cachet payé"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet signature conforme"
+                label="Présence cachet signature conforme"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence montant>2000dt"
+                label="Présence montant>2000dt"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Visa chef d'agence"
+                label="Visa chef d'agence"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Contrôle Ecriture">
+            <div>
+              <textarea
+                placeholder="Observation .."
+                [rows]="5"
+                [cols]="30"
+                pInputTextarea
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div style="margin-left: 10%" class="mt-4" *ngIf="documentType === 'Withdrawal'">
+        <span class="mb-4">Critères de contrôle de retrait</span>
+        <p-accordion>
+          <p-accordionTab header="Champ">
+            <p-inputNumber
+              placeholder="Numéro Opération"
+              mode="decimal"
+            ></p-inputNumber>
+          </p-accordionTab>
+          <p-accordionTab header="Signature client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature du client sur support"
+                label="Présence Signature du client sur support"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Signature client"
+                value="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                label="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Document Physique">
+            <div class="mb-4">
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique de l'opération"
+                label="Présence Support physique de l'opération"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique conforme"
+                label="Présence Support physique conforme"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Trace Machine"
+                value="Présence Oblitération machine"
+                label="Présence Oblitération machine"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Trace Machine"
+                value="Oblitération confrorme"
+                label=" Oblitération confrorme"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Confromité Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Numéro de caisse valide"
+                label="Numéro de caisse valide"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Cachet Banque">
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet payé"
+                label="Présence cachet payé"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet signature conforme"
+                label="Présence cachet signature conforme"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence montant>2000dt"
+                label="Présence montant>2000dt"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Visa chef d'agence"
+                label="Visa chef d'agence"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Contrôle Ecriture">
+            <div>
+              <textarea
+                placeholder="Observation .."
+                [rows]="5"
+                [cols]="30"
+                pInputTextarea
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div style="margin-left: 10%" class="mt-4" *ngIf="documentType === 'CashPayment'">
+        <span class="mb-4">Critères de contrôle de versement espéce</span>
+        <p-accordion>
+          <p-accordionTab header="Champ">
+            <p-inputNumber
+              placeholder="Numéro Opération"
+              mode="decimal"
+              #champ="ngModel" ngModel
+              name="champ"
+              [(ngModel)]="fieldNumber"
+             
+            ></p-inputNumber>
+          </p-accordionTab>
+          <p-accordionTab header="Signature client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature du client sur support"
+                label="Présence Signature du client sur support"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Signature client"
+                value="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                label="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Document Physique">
+            <div class="mb-4">
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique de l'opération"
+                label="Présence Support physique de l'opération"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique conforme"
+                label="Présence Support physique confrome"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Données Client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Présence informations"
+                label="Présence informations"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Montant en lettre indiqué"
+                label="Montant en lettre indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Montant en chiffre indiqué"
+                label="Montant en chiffre indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Date indiqué"
+                label="Date indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Identité Partie versante indiqué"
+                label="Identité Partie versante indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Numéro de compte indiqué"
+                label="Numéro de compte indiqué"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Données Client"
+                value="Identité bénéficiaire indiqué"
+                label="Identité bénéficiaire indiqué"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Trace Machine"
+                value="Présence Oblitération machine"
+                label="Présence Oblitération machine"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Trace Machine"
+                value="Oblitération confrorme"
+                label=" Oblitération confrorme"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Confromité Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Compte valide"
+                label="Compte valide"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Montant valide"
+                label="Montant valide"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Numéro de caisse valide"
+                label="Numéro de caisse valide"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Confromité Trace Machine"
+                value="Date valide"
+                label="Date valide"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Cachet Banque">
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet reçus"
+                label="Présence cachet reçus"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence montant>10 000dt"
+                label="Présence montant>10 000dt"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Identité Client"
+                label="Identité Client"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Contrôle Ecriture">
+            <div>
+              <textarea
+                placeholder="Observation .."
+                [rows]="5"
+                [cols]="30"
+                pInputTextarea
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div style="margin-left: 10%" class="mt-4" *ngIf="documentType === 'CheckRemittanceSlip'">
+        <span class="mb-4">Critères de contrôle de versement espéce</span>
+        <p-accordion>
+          <p-accordionTab header="Signature client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature du client sur support"
+                label="Présence Signature du client sur support"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Signature client"
+                value="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                label="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Document Physique">
+            <div class="mb-4">
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique de l'opération"
+                label="Présence Support physique de l'opération"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Données Client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Présence informations"
+                label="Présence informations"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Trace Machine">
+            <div class="mb-4">
+              <p-checkbox
+                name="Trace Machine"
+                value="Présence Oblitération machine"
+                label="Présence Oblitération machine"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Cachet Banque">
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet reçus"
+                label="Présence cachet reçus"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Contrôle Ecriture">
+            <div>
+              <textarea
+                placeholder="Observation .."
+                [rows]="5"
+                [cols]="30"
+                pInputTextarea
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div style="margin-left: 10%" class="mt-4" *ngIf="documentType === 'PaymentOrder'">
+        <span class="mb-4">Critères de contrôle de Ordre de virment</span>
+        <p-accordion>
+          <p-accordionTab header="Champ">
+            <p-inputNumber
+              placeholder="Numéro de compte"
+              mode="decimal"
+            ></p-inputNumber> 
+          </p-accordionTab>
+          <p-accordionTab header="Signature client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Signature client"
+                value="Présence Signature du client sur support"
+                label="Présence Signature du client sur support"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Signature client"
+                value="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                label="Présence Transcription manuscrite du nom et prenom du client indiqué sur document"
+                [(ngModel)]="clientSignatureValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Document Physique">
+            <div class="mb-4">
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique de l'opération"
+                label="Présence Support physique de l'opération"
+              ></p-checkbox>
+            </div>
+            <div>
+              <p-checkbox
+                name="Document Physique"
+                value="Présence Support physique conforme"
+                label="Présence Support physique conforme"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Données Client">
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Présence informations"
+                label="Présence informations"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Montant en lettre indiqué"
+                label="Montant en lettre indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Montant en chiffre indiqué"
+                label="Montant en chiffre indiqué"
+              ></p-checkbox>
+            </div>  
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Numéro de compte indiqué"
+                label="Numéro de compte indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Identité donneur d'ordre indiqué"
+                label="Identité donneur d'ordre indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Identité bénéficiaire indiqué"
+                label="Identité bénéficiaire indiqué"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Données Client"
+                value="Date indiqué"
+                label="Date indiqué"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Cachet Banque">
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet reçus"
+                label="Présence cachet reçus"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+            <div class="mb-4">
+              <p-checkbox
+                name="Cachet Banque"
+                value="Présence cachet signature conforme"
+                label="Présence cachet signature conforme"
+                [(ngModel)]="bankStampValues"
+              ></p-checkbox>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Contrôle Ecriture">
+            <div>
+              <textarea
+                placeholder="Observation .."
+                [rows]="5"
+                [cols]="30"
+                pInputTextarea
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-row ctn-buttons" style="margin-left: 2%">
+    <div class="p-2">
+      <button
+        class="button btn-valider"
+        [ngClass]="loading ? 'button-disabled' : ''"
+        (click)="showModalDialogValidate()"
+      >
+        Valider
+      </button>
+    </div>
+    <div class="p-2">
+      <button
+        class="button btn-rejeter"
+        [ngClass]="loading ? 'button-disabled' : ''"
+        (click)="showModalDialogReject()"
+      >
+        Rejeter
+      </button>
+    </div>
+    <div class="p-2">
+      <button
+        class="button btn-retyper"
+        [ngClass]="loading ? 'button-disabled' : ''"
+        (click)="showModalDialogRetype()"
+      >
+        Retyper
+      </button>
+    </div>
+    <div class="p-2">
+      <button
+        class="button btn-passer"
+        (click)="showModalDialogSkip()"
+        [ngClass]="loading ? 'button-disabled' : ''"
+      >
+        Passer
+      </button>
+    </div>
+  </div>
+</form>
+</div>
+
+<p-dialog
+  header="Voulez-vous valider ce document ?"
+  [(visible)]="displayModalValidate"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="button" (click)="onSubmit()">Je confirme</button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Voulez-vous rejeter ce document ?"
+  [(visible)]="displayModalReject"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="button" (click)="rejectDocument()">Je confirme</button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Voulez-vous retyper ce document ?"
+  [(visible)]="displayModalRetype"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="button" (click)="retypeDocument()">Je confirme</button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Voulez-vous passer ce document ?"
+  [(visible)]="displayModalSkip"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="m-0">
+    Êtes-vous sûr de vouloir confirmer cette action ? cette action n'est pas
+    reversible !
+  </p>
+  <ng-template pTemplate="footer">
+    <button class="button" (click)="skip()">Je confirme</button>
+  </ng-template>
+</p-dialog>

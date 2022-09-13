@@ -1,0 +1,81 @@
+<div class="container d-flex mt-2">
+  <div class="p-fluid grid">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid grid">
+        <div class="field col-12 mt-4 mb-0">
+          <h1 class="title">Connexion</h1>
+        </div>
+        <div class="col-12">
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Email"
+              formControlName="Email"
+              class="p-inputtext-lg"
+              [ngClass]="
+                loginForm.get('Email')?.invalid
+                  ? 'ng-invalid ng-dirty'
+                  : 'ng-valid'
+              "
+              pInputText
+            />
+            <small
+              class="p-error block text-left"
+              *ngIf="
+                loginForm.get('Email')?.invalid &&
+                loginForm.get('Email')?.touched &&
+                loginForm.get('Email')?.errors?.required
+              "
+              >*Email obligatoire.</small
+            >
+            <small
+              class="p-error block text-left"
+              *ngIf="
+                loginForm.get('Email')?.invalid &&
+                loginForm.get('Email')?.touched &&
+                loginForm.get('Email')?.errors?.pattern
+              "
+              >*Email Format invalide.</small
+            >
+          </div>
+
+          <div>
+            <p-password
+              [toggleMask]="true"
+              [feedback]="false"
+              formControlName="Password"
+              placeholder="Mot de passe"
+              class="p-inputtext-lg"
+              styleClass="p-input-icon-right"
+            ></p-password>
+            <small
+              class="p-error block text-left"
+              *ngIf="
+                loginForm.get('Password')?.touched &&
+                loginForm.get('Password')?.invalid &&
+                loginForm.get('Password')?.errors?.required
+              "
+              >*Mot de passe obligatoire.</small
+            >
+          </div>
+        </div>
+        <div class="col-12 text-right my-0">
+          <a class="forgot-link mb-0" routerLink="/SinIn/send-reset-email"
+            >mot de passe oublie ?</a
+          >
+          <button
+            [disabled]="loginForm.invalid"
+            class="btn w-100"
+            type="submit"
+          >
+            <span>S’identifier</span>
+          </button>
+          <p-progressSpinner
+            *ngIf="loginLoader"
+            styleClass="custom-spinner"
+          ></p-progressSpinner>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

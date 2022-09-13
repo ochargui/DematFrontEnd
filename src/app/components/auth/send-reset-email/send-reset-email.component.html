@@ -1,0 +1,63 @@
+<div class="container d-flex mt-2">
+  <div class="p-fluid grid">
+    <form [formGroup]="sendResetEmailForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid grid" *ngIf="emailSent === 'still'">
+        <div class="field col-12 mt-4 mb-0">
+          <h1 class="title">Reinitialiser votre Mot De Passe</h1>
+          <p>
+            Veuillez s'il vous plait saisir votre email , s'il il existe un
+            utilisateur associé a ce dernier , un mail vous sera envoyé
+          </p>
+        </div>
+        <div class="field col-12 mt-2 mb-0">
+          <input
+            type="text"
+            pInputText
+            formControlName="email"
+            placeholder=" Email"
+            class="p-inputtext-lg"
+            styleClass="p-input-icon-right"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+              sendResetEmailForm.get('email')?.invalid &&
+              sendResetEmailForm.get('email')?.touched &&
+              sendResetEmailForm.get('email')?.errors?.required
+            "
+            >Password is required</span
+          >
+        </div>
+        <div class="field col-12 mt-4">
+          <re-captcha
+            (resolved)="resolved($event)"
+            siteKey="6Lesn2wgAAAAAMA-5U24dVB3XIj6VKz0SyupbPqK
+          "
+          ></re-captcha>
+        </div>
+        <div class="field col-12" *ngIf="!isLoading">
+          <button
+            [disabled]="sendResetEmailForm.invalid"
+            class="btn w-100"
+            type="submit"
+            *ngIf="captcha"
+          >
+            <span>Envoyer</span>
+          </button>
+        </div>
+        <div class="field col-12" *ngIf="isLoading">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+      </div>
+      <div class="p-fluid grid" *ngIf="emailSent == 'sent'">
+        <div class="field col-12 mt-4 mb-0">
+          <h1 class="title">Le mail a été envoyé avec succès</h1>
+          <p>
+            Veuillez s'il vous plait vérifier votre boite mail pour terminer la
+            procedure du mot de passe oublié
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

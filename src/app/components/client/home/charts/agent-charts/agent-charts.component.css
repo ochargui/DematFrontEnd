@@ -1,0 +1,14 @@
+.title-stat h2 {
+    font-size: 15px;
+    color: #093a48;
+    text-align: left;
+    font-weight: bold;
+    color: #093a48;
+    margin-top: 29px;
+  }
+  .statistic-right-area{
+    padding: 20px;
+    background: #fff;
+    margin-top: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }

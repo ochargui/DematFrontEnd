@@ -1,0 +1,18 @@
+<header class="navbar" style="position: inherit" *ngIf="currentRole ==='Super-utilisateur'">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input type="text" pInputText placeholder="Chercher" />
+    </span>
+    <div class="">
+      <p-calendar
+        [showTime]="true"
+        [showSeconds]="true"
+        inputId="time"
+        class="calendar_input"
+        placeholder="Choisir une date"
+        style="width:100px"
+      ></p-calendar>
+      <button class="button">Rapport Scoring</button>
+      <button class="button">Rapport suivie JC</button>
+    </div>
+  </header>
